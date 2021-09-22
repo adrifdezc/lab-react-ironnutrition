@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import foods from "./foods.json";
-import { Card, Row, Col, Divider, Input, Button } from "antd";
+import { Row } from "antd";
 import FoodBox from './components/FoodBox';
 import AddFoodForm from './components/AddFoodForm';
 import Search from './components/Search';
@@ -19,27 +19,35 @@ function App() {
 
     setFoodList(updatedFoodList);
     setFood(updatedFood)
-  }
+  };
 
-  console.log(filteredWord)
   const searchFood=()=>{
     const filteredFoodList = foodList.filter(foods=> (foods.name.toLowerCase().includes(filteredWord.toLowerCase())))
-
-    if(filteredWord === " "){
+    if(filteredWord === filteredWord[0]){
       setFoodList(food)
+    }else{
+      setFoodList(filteredFoodList)
+      console.log(filteredWord)
     }
 
-    setFoodList(filteredFoodList)
-  }
+  };
+
+  const deleteFood= (foodName) =>{
+    const deletedFood = foodList.filter((food)=>{
+      return food.name !== foodName;
+    });
+    setFoodList(deletedFood)
+  };
+  
   
   return (
     <div className="App">
       <AddFoodForm addFood={addNewFood} />
-      <Search setFilteredWord = {setFilteredWord} searchFood={searchFood}/>
-
+      <Search setFilteredWord = {setFilteredWord} filteredWord ={filteredWord} searchFood={searchFood}/>
+      
       <Row style={{ width: "100%", justifyContent: "center" }}>
      {foodList.map((food, index)=>{
-         return( <FoodBox foodList={food} key={index} />
+         return( <FoodBox deleteFood={deleteFood} foodList={food} key={index} />
      )})}
         </Row>
     </div>
