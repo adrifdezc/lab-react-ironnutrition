@@ -7,6 +7,7 @@ import AddFoodForm from './components/AddFoodForm';
 import Search from './components/Search';
 
 
+
 function App() {
   const [foodList, setFoodList] = useState(foods)
   const [food, setFood] = useState(foods)
@@ -20,16 +21,22 @@ function App() {
     setFoodList(updatedFoodList);
     setFood(updatedFood)
   };
+  console.log('1',filteredWord)
+  console.log('this is food: ', food)
+  
 
   const searchFood=()=>{
-    const filteredFoodList = foodList.filter(foods=> (foods.name.toLowerCase().includes(filteredWord.toLowerCase())))
-    if(filteredWord === filteredWord[0]){
+    let newArray = [...foods]
+    if(filteredWord.length === 1){
+      filteredWord.substr(0,1)
       setFoodList(food)
+      console.log("Im here!")
     }else{
+      const filteredFoodList = newArray.filter(foods=> (foods.name.toLowerCase().includes(filteredWord.toLowerCase())))
       setFoodList(filteredFoodList)
-      console.log(filteredWord)
+      console.log('2',filteredWord)
+      console.log('This is filtered list: ', filteredFoodList)
     }
-
   };
 
   const deleteFood= (foodName) =>{
