@@ -8,8 +8,8 @@ function Search(props) {
 
 
   const handleNameInput = (e) => {
-    props.setFilteredWord(e.target.value)
-    props.searchFood()
+    // props.setFilteredWord(e.target.value)
+    props.searchFood(e.target.value)
   };
 
   return (

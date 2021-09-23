@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import foods from "./foods.json";
 import { Row } from "antd";
@@ -7,12 +7,15 @@ import AddFoodForm from './components/AddFoodForm';
 import Search from './components/Search';
 
 
-
 function App() {
   const [foodList, setFoodList] = useState(foods)
   const [food, setFood] = useState(foods)
 
   const [filteredWord, setFilteredWord] = useState("")
+
+  // useEffect(() => {
+  //   searchFood()
+  // },[filteredWord])
 
   const addNewFood = newFood =>{
     const updatedFoodList = [...foodList, newFood];
@@ -25,14 +28,14 @@ function App() {
   console.log('this is food: ', food)
   
 
-  const searchFood=()=>{
-    let newArray = [...foods]
-    if(filteredWord.length === 1){
-      filteredWord.substr(0,1)
+  let newArray = [...foods]
+  const searchFood=(text)=>{
+    if(text===""){
+      // filteredWord.substr(0,1)
       setFoodList(food)
-      console.log("Im here!")
+      console.log("I'm here!")
     }else{
-      const filteredFoodList = newArray.filter(foods=> (foods.name.toLowerCase().includes(filteredWord.toLowerCase())))
+      const filteredFoodList = newArray.filter(foods=> (foods.name.toLowerCase().includes(text.toLowerCase())))
       setFoodList(filteredFoodList)
       console.log('2',filteredWord)
       console.log('This is filtered list: ', filteredFoodList)
@@ -50,7 +53,7 @@ function App() {
   return (
     <div className="App">
       <AddFoodForm addFood={addNewFood} />
-      <Search setFilteredWord = {setFilteredWord} filteredWord ={filteredWord} searchFood={searchFood}/>
+      <Search filteredWord ={filteredWord} searchFood={searchFood}/>
       
       <Row style={{ width: "100%", justifyContent: "center" }}>
      {foodList.map((food, index)=>{
